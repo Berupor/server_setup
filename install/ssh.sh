@@ -17,12 +17,8 @@ UsePAM yes
 EOF
 
 echo "▶ Restarting SSH service…"
-# try both service names but don’t exit on failure
-if sudo systemctl restart ssh; then
-  echo "✔ Restarted ssh.service"
-elif sudo systemctl restart sshd; then
-  echo "✔ Restarted sshd.service"
-else
-  echo "⚠️  Could not restart SSH service — please run one of:" \
-       "'sudo systemctl restart ssh' or 'sudo systemctl restart sshd'" >&2
-fi
+sudo systemctl restart ssh.service 2>/dev/null \
+  || sudo systemctl restart sshd.service 2>/dev/null \
+  || echo "⚠️  Could not restart SSH — please run 'sudo systemctl restart ssh' or 'sudo systemctl restart sshd'" >&2
+
+echo "✔ SSH configured."
