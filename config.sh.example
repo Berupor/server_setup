@@ -1,2 +1,2 @@
-USERNAME="your_user"
-SSH_PORT=22
+export USERNAME="your_user"
+export SSH_PORT=22

@@ -5,7 +5,7 @@ env:
 
 tasks:
   default:
-    desc: "Full setup"
+    desc: Run full server setup
     cmds:
       - task: base
       - task: terminfo
@@ -15,32 +15,31 @@ tasks:
       - task: docker
 
   base:
-    desc: "Install base packages and dotfiles"
+    desc: Install base packages and dotfiles
     cmds:
-      - source {{.CONFIG_FILE}} && bash install/base.sh
+      - bash -c 'source {{.CONFIG_FILE}} && exec ./install/base.sh'
 
   terminfo:
     desc: Ensure xterm-kitty terminfo is present
     cmds:
-      - source {{.CONFIG_FILE}} && ./install/terminfo.sh
+      - bash -c 'source {{.CONFIG_FILE}} && exec ./install/terminfo.sh'
 
   ssh:
-    desc: "Configure SSH"
+    desc: Configure SSH (port, keys, disable password login)
     cmds:
-      - source {{.CONFIG_FILE}} && bash install/ssh.sh
+      - bash -c 'source {{.CONFIG_FILE}} && exec ./install/ssh.sh'
 
   sudo:
-    desc: "Disable sudo password"
+    desc: Disable sudo password prompt
     cmds:
-      - source {{.CONFIG_FILE}} && sed "s/REPLACE_WITH_USERNAME/$USERNAME/" sudo/nopasswd.template | sudo tee /etc/sudoers.d/nopasswd > /dev/null
-      - sudo chmod 0440 /etc/sudoers.d/nopasswd
+      - bash -c 'source {{.CONFIG_FILE}} && exec ./install/sudo.sh'
 
   ufw:
-    desc: "Setup UFW firewall"
+    desc: Enable and configure UFW firewall
     cmds:
-      - source {{.CONFIG_FILE}} && bash install/ufw.sh
+      - bash -c 'source {{.CONFIG_FILE}} && exec ./install/ufw.sh'
 
   docker:
-    desc: "Install Docker"
+    desc: Install Docker Engine & Compose
     cmds:
-      - source {{.CONFIG_FILE}} && bash install/docker.sh
+      - bash -c 'source {{.CONFIG_FILE}} && exec ./install/docker.sh'
