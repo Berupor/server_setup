@@ -1,4 +1,4 @@
 htop
-nvim
+neovim
 git
 ufw

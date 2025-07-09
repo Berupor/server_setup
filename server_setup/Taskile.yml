@@ -1,0 +1,40 @@
+version: "3"
+
+env:
+  CONFIG_FILE: "./config.sh"
+
+tasks:
+  default:
+    desc: "Full setup"
+    cmds:
+      - task: base
+      - task: ssh
+      - task: sudo
+      - task: ufw
+      - task: docker
+
+  base:
+    desc: "Install base packages and dotfiles"
+    cmds:
+      - source {{.CONFIG_FILE}} && bash install/base.sh
+
+  ssh:
+    desc: "Configure SSH"
+    cmds:
+      - source {{.CONFIG_FILE}} && bash install/ssh.sh
+
+  sudo:
+    desc: "Disable sudo password"
+    cmds:
+      - source {{.CONFIG_FILE}} && sed "s/REPLACE_WITH_USERNAME/$USERNAME/" sudo/nopasswd.template | sudo tee /etc/sudoers.d/nopasswd > /dev/null
+      - sudo chmod 0440 /etc/sudoers.d/nopasswd
+
+  ufw:
+    desc: "Setup UFW firewall"
+    cmds:
+      - source {{.CONFIG_FILE}} && bash install/ufw.sh
+
+  docker:
+    desc: "Install Docker"
+    cmds:
+      - source {{.CONFIG_FILE}} && bash install/docker.sh

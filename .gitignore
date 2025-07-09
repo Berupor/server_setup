@@ -8,7 +8,7 @@ __pycache__/
 *.tmp
 .env
 id_*
-
+config.sh
 # C extensions
 *.so
 
