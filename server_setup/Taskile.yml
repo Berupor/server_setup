@@ -8,6 +8,7 @@ tasks:
     desc: "Full setup"
     cmds:
       - task: base
+      - task: terminfo
       - task: ssh
       - task: sudo
       - task: ufw
@@ -17,6 +18,11 @@ tasks:
     desc: "Install base packages and dotfiles"
     cmds:
       - source {{.CONFIG_FILE}} && bash install/base.sh
+
+  terminfo:
+    desc: Ensure xterm-kitty terminfo is present
+    cmds:
+      - source {{.CONFIG_FILE}} && ./install/terminfo.sh
 
   ssh:
     desc: "Configure SSH"
