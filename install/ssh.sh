@@ -16,4 +16,4 @@ UsePAM yes
 EOF
 
 echo "▶ Restarting SSH service..."
-sudo systemctl restart sshd
+sudo systemctl restart ssh || sudo systemctl restart sshd
