@@ -14,7 +14,7 @@ sudo apt install -y git
 Then clone and run the full setup:
 
 ```bash
-git clone https://github.com/yourname/server-setup.git
+git clone https://github.com/berupor/server_setup.git
 cd server-setup
 cp config.sh.example config.sh   # edit USERNAME, SSH_PORT, etc.
 task                              # runs all setup steps, now including kitty terminfo
